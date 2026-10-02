@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyMovement()
     {
         Vector3 horizontalMove = moveDirection * moveSpeed;
-        // Conserva la velocidad vertical actual (gravedad / salto), solo pisa X y Z.
+
         rb.linearVelocity = new Vector3(horizontalMove.x, rb.linearVelocity.y, horizontalMove.z);
     }
 
@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         jumpRequested = false;
 
         Vector3 velocity = rb.linearVelocity;
-        velocity.y = 0f; // resetea la caída antes de saltar, salto más consistente
+        velocity.y = 0f;
         rb.linearVelocity = velocity;
         rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
     }
