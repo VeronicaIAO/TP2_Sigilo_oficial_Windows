@@ -1,33 +1,15 @@
 using UnityEngine;
 
-/// <summary>
-/// Responsabilidad única: percibir al jugador. No decide qué hacer con esa información
-/// (eso lo maneja EnemyController) — separación de responsabilidades pedida en Nota 10.
-///
-/// - Detección primaria: Raycast dentro de un cono de visión, respetando distancia y
-///   obstáculos entre enemigo y jugador (Nota 4).
-/// - Detección secundaria: OverlapSphere (equivalente a un SphereCollider de detección
-///   cercana), que ignora el ángulo de visión — el jugador "se choca" con el radar del
-///   enemigo (Nota 4).
-/// - Detección progresiva: en vez de detectar de golpe, acumula un nivel de 0 a 1. Por
-///   debajo de alertThreshold el enemigo no reacciona, entre alertThreshold y
-///   detectionThreshold está en duda, y al llegar a 1 lo detecta del todo (Nota 10).
-/// - Respeta zonas de ocultamiento: si el jugador tiene PlayerHidingStatus.IsHidden en
-///   true, no lo detecta aunque esté en el cono de visión (Nota 7).
-/// </summary>
 public class EnemyDetection : MonoBehaviour
 {
-    [Header("Detección primaria (Raycast)")]
     public Transform eyePoint;
     public float viewDistance = 10f;
     [Range(0, 180)] public float viewAngle = 90f;
     public LayerMask obstacleMask;
     public LayerMask playerMask;
 
-    [Header("Detección secundaria (zona cercana)")]
     public float closeRangeRadius = 2.5f;
 
-    [Header("Detección progresiva")]
     public float detectionSpeed = 1f;
     public float detectionDecaySpeed = 0.6f;
     [Range(0, 1)] public float alertThreshold = 0.4f;

@@ -1,11 +1,7 @@
 using UnityEngine;
 
-/// <summary>
-/// Poner en el prefab que se tira con DistractionThrower. Al chocar con algo,
-/// avisa a todos los EnemyController dentro del radio de ruido para que vayan
-/// a investigar ese punto.
-/// </summary>
-[RequireComponent(typeof(Rigidbody))]
+
+/*[RequireComponent(typeof(Rigidbody))]
 public class NoiseEmitter : MonoBehaviour
 {
     public float noiseRadius = 6f;
@@ -38,3 +34,4 @@ public class NoiseEmitter : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, noiseRadius);
     }
 }
+*/
