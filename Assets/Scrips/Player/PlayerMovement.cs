@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
     public Transform cameraTransform;
@@ -17,12 +16,16 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Vector3 moveDirection;
     private bool jumpRequested;
-    private bool isGrounded;
+    public bool isGrounded;
+
+    public float gravity = -20f;
+    private Vector3 verticalVelocity;
+    public float jumpPForce = 8f;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // la rotación la manejamos nosotros, no la física
+        rb.freezeRotation = true;
 
         if (cameraTransform == null && Camera.main != null)
         {
@@ -34,24 +37,45 @@ public class PlayerMovement : MonoBehaviour
     {
         ReadMovementInput();
 
-        if (isGrounded && Keyboard.current.spaceKey.IsPressed())
+        if (isGrounded == true && Keyboard.current.spaceKey.IsPressed())
         {
-            jumpRequested = true;
+            isGrounded = false;
+            verticalVelocity.y = jumpPForce;
+            
+            verticalVelocity.y += gravity * Time.deltaTime;
+            Vector3 velocity = rb.linearVelocity;
+            rb.linearVelocity = velocity;
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+           
         }
     }
 
     void FixedUpdate()
     {
-        CheckGrounded();
         ApplyMovement();
         ApplyRotation();
-        ApplyJump();
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        isGrounded = true;
     }
 
     private void ReadMovementInput()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = 0f;
+        float vertical = 0f;
+
+        if (Keyboard.current != null)
+        {
+        
+            if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed) horizontal += 1f;
+            if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed) horizontal -= 1f;
+
+
+            if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed) vertical += 1f;
+            if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) vertical -= 1f;
+        }
 
         if (cameraTransform == null)
         {
@@ -89,21 +113,7 @@ public class PlayerMovement : MonoBehaviour
         rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime));
     }
 
-    private void ApplyJump()
-    {
-        if (!jumpRequested) return;
-        jumpRequested = false;
 
-        Vector3 velocity = rb.linearVelocity;
-        velocity.y = 0f;
-        rb.linearVelocity = velocity;
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-    }
-
-    private void CheckGrounded()
-    {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.15f, groundMask);
-    }
 
     void OnDrawGizmosSelected()
     {

@@ -1,9 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-/// <summary>
-/// Va en el jugador. Al apretar la tecla configurada, instancia un objeto (con
-/// Rigidbody + NoiseEmitter) y lo tira hacia adelante para generar una distracción.
-/// </summary>
 public class DistractionThrower : MonoBehaviour
 {
     public GameObject distractionPrefab;
@@ -13,7 +10,7 @@ public class DistractionThrower : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(throwKey))
+        if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
             Throw();
         }

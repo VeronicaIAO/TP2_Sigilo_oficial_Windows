@@ -37,8 +37,15 @@ public class ThirdPersonCameraOrbit : MonoBehaviour
         if (target == null) return;
 
 
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = 0f;
+        float mouseY = 0f;
+
+        if (Mouse.current != null)
+        {
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+            mouseX = mouseDelta.x;
+            mouseY = mouseDelta.y;
+        }
 
         yaw += mouseX * sensitivityX;
         pitch -= mouseY * sensitivityY; // invertido para que "arriba" en el mouse mire hacia arriba
