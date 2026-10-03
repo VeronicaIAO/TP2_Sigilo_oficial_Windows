@@ -32,14 +32,13 @@ public class EnemyController : MonoBehaviour
  
     void OnEnable() => PlayerHidingStatus.OnPlayerHidden += HandlePlayerHidden;
     void OnDisable() => PlayerHidingStatus.OnPlayerHidden -= HandlePlayerHidden;
- 
+     // Update is called once per frame
     void Update()
     {
         if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
  
         if (GameManager.Instance != null && GameManager.Instance.loseOnDetectionOnly)
         {
-            // Modo Nota 4: sin estados, ver al jugador ya es game over.
             Patrol();
             if (detection.PlayerDetected)
             {
@@ -93,7 +92,6 @@ public class EnemyController : MonoBehaviour
  
     private void HandlePlayerHidden()
     {
-        // Requisito Nota 7: al esconderse, corta la persecución y vuelve a patrullar.
         if (CurrentState == EnemyState.Chase || CurrentState == EnemyState.Suspicious)
         {
             EnterState(EnemyState.Patrol);

@@ -7,7 +7,7 @@ public class DistractionThrower : MonoBehaviour
     public Transform throwPoint;
     public float throwForce = 8f;
     public KeyCode throwKey = KeyCode.F;
-
+    // Update is called once per frame
     void Update()
     {
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)

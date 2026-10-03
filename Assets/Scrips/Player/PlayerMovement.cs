@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
             cameraTransform = Camera.main.transform;
         }
     }
-
+    // Update is called once per frame
     void Update()
     {
         ReadMovementInput();

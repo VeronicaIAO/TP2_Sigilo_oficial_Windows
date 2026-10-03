@@ -21,7 +21,7 @@ public class ThirdPersonCameraOrbit : MonoBehaviour
 
     private float yaw;
     private float pitch = 15f;
-
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -31,7 +31,7 @@ public class ThirdPersonCameraOrbit : MonoBehaviour
         yaw = startAngles.y;
         pitch = startAngles.x;
     }
-
+    // Update is called once per frame
     void LateUpdate()
     {
         if (target == null) return;
@@ -48,7 +48,7 @@ public class ThirdPersonCameraOrbit : MonoBehaviour
         }
 
         yaw += mouseX * sensitivityX;
-        pitch -= mouseY * sensitivityY; // invertido para que "arriba" en el mouse mire hacia arriba
+        pitch -= mouseY * sensitivityY;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);

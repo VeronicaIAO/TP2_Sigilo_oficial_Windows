@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Poner en un Collider trigger en la meta del nivel.
-/// </summary>
 [RequireComponent(typeof(Collider))]
 public class GoalZone : MonoBehaviour
 {

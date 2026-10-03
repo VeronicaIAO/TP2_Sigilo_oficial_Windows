@@ -18,7 +18,7 @@ public class EnemyVisualFeedback : MonoBehaviour
         controller = GetComponent<EnemyController>();
         propertyBlock = new MaterialPropertyBlock();
     }
-
+    // Update is called once per frame
     void Update()
     {
         if (indicatorRenderer == null) return;

@@ -22,7 +22,7 @@ public class EnemyDetection : MonoBehaviour
 
     private Transform player;
     private PlayerHidingStatus hidingStatus;
-
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -32,7 +32,7 @@ public class EnemyDetection : MonoBehaviour
             hidingStatus = playerObj.GetComponent<PlayerHidingStatus>();
         }
     }
-
+    // Update is called once per frame
     void Update()
     {
         if (player == null) return;
